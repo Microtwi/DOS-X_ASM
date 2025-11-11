@@ -1,15 +1,15 @@
 <h1 align="center">
   <br>
   <a href="">
-    <img src="https://emulation.gametechwiki.com/images/thumb/9/99/DOSBox-X.png/180px-DOSBox-X.png" alt="Antenna" style="width:40%; max-width:200px; height:auto; border-radius:12px;">
+    <img src="https://emulation.gametechwiki.com/images/thumb/9/99/DOSBox-X.png/180px-DOSBox-X.png" alt="DOSBox-X" style="width:40%; max-width:200px; height:auto; border-radius:12px;">
   </a>
   <br>
-  🎨 DOS-X ASM 2D Draw App
+    DOSBox-X ASM 2D Draw App
   <br>
 </h1>
 
 
-# Assembly Drawing Application
+# Application
 
 A modular assembly language PoC program that provides an interactive menu-driven interface for drawing geometric shapes in graphics mode. Built with **x86 assembly**, this application demonstrates efficient low-level programming with clean separation of concerns.
 
@@ -18,23 +18,24 @@ A modular assembly language PoC program that provides an interactive menu-driven
 ## 🧭 Features
 
 - **Interactive Menu System:** Hierarchical menus for easy navigation  
+- **Direct Video Drawing:** Efficient drawing of shapes using direct video memory access
 - **Shape Drawing:** Support for lines (horizontal/vertical) and squares (filled/outline)  
 - **Parameter Customization:** Configurable size, position, and color options  
-- **Minimal Input Validation:** numeric input handling with validation  
-- **Screen Management:** Proper video mode switching and screen clearing  
+- **Minimal Input Validation:** numeric input handling with some validation  
+- **Screen Management:** Proper video mode switching and screen clearing
 
 ---
 
 ## 📂 Project Structure
 
-main.asm - Application entry point and initialization
-MENU.ASM - Main menu interface and navigation
-DRAWM.ASM - Drawing submenu for shape selection
-DRAWL.ASM - Line drawing functionality and parameters
-DRAWS.ASM - Square drawing with size and position controls
-IO.ASM - Input/output utilities and screen management
-INP.ASM - Numeric input handling and validation
-DATA.ASM - Data definitions, messages, and constants
+- MAIN.ASM - Application entry point and initialization
+- MENU.ASM - Main menu interface and navigation
+- DRAWM.ASM - Drawing submenu for shape selection
+- DRAWL.ASM - Line drawing functionality and parameters
+- DRAWS.ASM - Square drawing with size and position controls
+- IO.ASM - Input/output utilities and screen management
+- INP.ASM - Numeric input handling and validation
+- DATA.ASM - Data definitions, messages, and constants
 
 ---
 
@@ -42,7 +43,7 @@ DATA.ASM - Data definitions, messages, and constants
 
 The application follows a **modular design pattern** where each component handles specific responsibilities:
 
-- **Core Module (`main.asm`):** Initializes the environment and launches the main menu  
+- **Core Module (`MAIN.ASM`):** Initializes the environment and launches the main menu  
 - **UI Layer (`MENU.ASM`, `DRAWM.ASM`):** Handles user interface and menu navigation  
 - **Graphics Engine (`DRAWL.ASM`, `DRAWS.ASM`):** Implements shape drawing algorithms  
 - **System Services (`IO.ASM`, `INP.ASM`):** Provides I/O operations and input validation  
