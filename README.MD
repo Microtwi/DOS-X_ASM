@@ -1,7 +1,7 @@
 <h1 align="center">
   <br>
   <a href="">
-    <img src="https://emulation.gametechwiki.com/images/thumb/9/99/DOSBox-X.png/180px-DOSBox-X.png" alt="Antenna" style="width:100%; max-width:800px; height:auto; border-radius:12px;">
+    <img src="https://emulation.gametechwiki.com/images/thumb/9/99/DOSBox-X.png/180px-DOSBox-X.png" alt="Antenna" style="width:40%; max-width:200px; height:auto; border-radius:12px;">
   </a>
   <br>
   🎨 DOS-X ASM 2D Draw App
