@@ -12,9 +12,19 @@
 ; | |_| | ' \| \ V / -_) '_(_-< |  _/ _` |  _/ -_) _` |   | || '_/ _` | ' \(_-< | \ V / _` | ' \| / _` | / _` | | ' \  | _ \ '_/ _` (_-</ _ \ V /
 ;  \___/|_||_|_|\_/\___|_| /__/_|\__\__,_|\__\___\__,_|   |_||_| \__,_|_||_/__/_|_|\_/\__,_|_||_|_\__,_| \__,_|_|_||_| |___/_| \__,_/__/\___/\_/ 
 ; DATA.ASM                                                                                                                                                                                                                                                                                                                                           ; __zrppbaube_ugaiukcow_2025
+; =======================================================================================
+; FILE: DATA.ASM
+; MODULE: Data Definitions, Messages, and Constants
+; 
+; PURPOSE:
+;   - Centralize all textual prompts and UI assets
+;   - Provide shared variables for parameters and buffers
+;   - Define min/max ranges for basic validation
+; =======================================================================================
 
 .DATA
     
+     ; --- Credits / About block (shown from MENU.ASM) ---
      logo DB ' ==================== CREDITS ==================== ' ,13,10
           DB '              __         __                  __    ' ,13,10
           DB '     __ _____/ /__ _____/ /__ ___ ___  __ __/ /    ' ,13,10
@@ -35,12 +45,14 @@
           DB '      16-bit DOS asm for 2D figures rendering      ' ,13,10
           DB ' =================================================$'
 
+     ; --- Main menu prompt ---
      prompt_menu DB '===== MENU =====     ' ,13,10,13,10
                  DB '1. [  Draw    ]      ' ,13,10
                  DB '2. [  About   ]      ' ,13,10
                  DB '3. [  Exit    ]      ' ,13,10,13,10                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      
                  DB 'Choose option (1-3): $'
      
+     ; --- Draw submenu prompt ---
      prompt_draw DB '===== DRAW =====     ' ,13,10,13,10
                  DB '1. [  Line    ]      ' ,13,10
                  DB '2. [  Sqr     ]      ' ,13,10
@@ -49,6 +61,7 @@
                  DB 'Choose option (1-4): $'
 
 
+     ; --- Line type prompt ---
      prompt_line_type DB '===== LINE TYPE =====' ,13,10,13,10
                       DB '1. [  Horizontal  ]       ' ,13,10
                       DB '2. [  Vertical    ]       ' ,13,10
@@ -57,6 +70,7 @@
                       DB 'Choose option (1-4): $    '
 
 
+     ; --- Square menu prompt ---
      prompt_square DB '=== DRAW SQUARE ===   ' ,13,10,13,10                                                                                                                                                                                                                                                                                                                                           
                    DB '1. [  FILLED  ]       ' ,13,10
                    DB '2. [  OUTLINE ]       ' ,13,10
@@ -64,7 +78,7 @@
                    DB '4. [  Exit    ]       ' ,13,10,13,10
                    DB 'Choose option (1-4): $'
 
-     newl           DB 13,10,'$'
+     newl           DB 13,10,'$'         ; CRLF sequence for DOS AH=09h
 
      prompt_width  DB 13,10, 'Enter width: $'
      prompt_height DB 13,10, 'Enter height: $'                                                                                                                                                                                                                                                                                                                                           
@@ -77,20 +91,24 @@
      prompt_square_y      DB 13,10,'Enter Y position: $'
      prompt_square_color  DB 13,10,'Enter color: $'
 
+     ; --- Shared parameters for line drawing ---
      line_x DW 0
      line_y DW 0
      line_param DW 0
      line_color DB ?
      line_type DB ?
 
+     ; --- Shared parameters for square drawing ---
      square_x     DW ?
      square_y     DW ?
      square_size  DW ?
      square_color DB ?
 
+     ; --- DOS 0Ah buffered input: [maxlen, curlen, bytes...] ---
      input_buffer DB 6, 0, 6 dup(0)
      input DB 1 dup(?)                                                                                                                                                                                                                                                                                                                                           
 
+     ; --- Ranges (for potential validation/extensions) ---
      MIN_X EQU 0
      MIN_Y EQU 0
      MIN_COLOR EQU 0
