@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DOSBox‑X ASM 2D Draw App – Documentation</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header class="terminal-header">
+    <div class="window-controls" aria-hidden="true">
+      <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+    </div>
+    <div class="header-body">
+      <h1>DOSBox‑X ASM 2D Draw App</h1>
+      <p>Intel 8086 (16‑bit) • DOSBox‑X • MASM/TASM</p>
+    </div>
+  </header>
+
+  <main>
+    <section id="overview">
+      <h2>1. Descriere generală</h2>
+      <p>
+        Aplicație modulară în limbaj de asamblare x86 care oferă un meniu interactiv
+        pentru desenarea de forme 2D în mod grafic (13h). Proiectul demonstrează
+        folosirea perifericelor tastatură (input), display (text și grafic) și memorie
+        (segment de date, VRAM A000h).
+      </p>
+      <ul>
+        <li><strong>Microprocesor</strong>: Intel 8086 (real mode)</li>
+        <li><strong>Periferice</strong>: tastatură (INT 21h/01h, INT 16h), display (INT 10h), memorie (A000h)</li>
+        <li><strong>Mediu execuție</strong>: DOSBox‑X</li>
+      </ul>
+    </section>
+
+    <section id="peripherals">
+      <h2>2. Periferice și servicii</h2>
+      <ul>
+        <li><strong>Tastatură</strong>: citire caracter (DOS INT 21h/01h), așteptare tastă (BIOS INT 16h/00h)</li>
+        <li><strong>Display</strong>: mod text 80×25 și mod grafic 13h 320×200×256 (BIOS INT 10h)</li>
+        <li><strong>Memorie</strong>: segment date DS, memorie video ES=A000h pentru pixeli</li>
+      </ul>
+      <p><strong>Întreruperi utilizate</strong>:</p>
+      <ul>
+        <li>INT 10h – AH=00h (set video mode), AH=02h (cursor), AH=06h (scroll/clear)</li>
+        <li>INT 21h – AH=09h (print string), AH=01h (read char), AH=4Ch (exit)</li>
+        <li>INT 16h – AH=00h (wait for key)</li>
+      </ul>
+    </section>
+
+    <section id="block-diagram">
+      <h2>3. Schemă bloc</h2>
+      <p>
+        Structura modulară: MAIN (inițializare) → MENU/DRAWM (UI) → DRAWL/DRAWS (algoritmi desen)
+        susținute de IO (servicii DOS/BIOS), INP (input numeric), DATA (mesaje/constante).
+      </p>
+      <figure class="figure-bordered">
+        <img src="../assets/images/diagrams/diagrama_bloc.png" alt="Schemă bloc a sistemului" />
+        <figcaption>Figura 1: Schemă bloc a sistemului</figcaption>
+      </figure>
+    </section>
+
+    <section id="operation">
+      <h2>4. Diagramă de funcționare</h2>
+      <ol>
+        <li>Start program: inițializează DS, curăță ecranul, afișează meniul principal.</li>
+        <li>Navigare: utilizatorul alege opțiunea (Line/Square/Back/Exit).</li>
+        <li>Colectare parametri: citire numerică în modul text.</li>
+        <li>Mod grafic: se comută la 13h, se desenează forma în VRAM.</li>
+        <li>Întoarcere: așteaptă o tastă, revine în modul text.</li>
+      </ol>
+    </section>
+
+    <section id="test-plan">
+      <h2>5. Plan de testare</h2>
+      <p>Scenarii recomandate pentru validare funcțională:</p>
+      <ol>
+        <li><strong>Linie orizontală</strong>: y=50, x=10, lățime=100, culoare=12 → se trasează pe rândul 50.</li>
+        <li><strong>Linie verticală</strong>: x=100, y=20, înălțime=80, culoare=10 → se trasează pe coloana 100.</li>
+        <li><strong>Pătrat plin</strong>: (x,y)=(40,40), mărime=40, culoare=4 → zonă umplută corect.</li>
+        <li><strong>Pătrat contur</strong>: (x,y)=(60,30), mărime=50, culoare=14 → doar marginile trasate.</li>
+        <li><strong>Input invalid</strong>: caractere non‑digit sau limite depășite → re‑prompt sau ignorare.</li>
+        <li><strong>Tranziții mod</strong>: după desenare, apăsare tastă → revine la text, ecran curat.</li>
+      </ol>
+      <h3>Matrix de test (parametri vs rezultate așteptate)</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Caz</th>
+            <th>Parametri</th>
+            <th>Condiții</th>
+            <th>Rezultat așteptat</th>
+            <th>Limite</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Linie orizontală validă</td>
+            <td>x=10, y=50, width=100, color=12</td>
+            <td>0≤x≤219, 0≤y≤199</td>
+            <td>Segment orizontal pe y=50, 100 pixeli</td>
+            <td>Clipping dacă x+width>319</td>
+          </tr>
+          <tr>
+            <td>Linie verticală validă</td>
+            <td>x=100, y=20, height=80, color=10</td>
+            <td>0≤y≤119, 0≤x≤319</td>
+            <td>Segment vertical pe x=100, 80 pixeli</td>
+            <td>Clipping dacă y+height>199</td>
+          </tr>
+          <tr>
+            <td>Pătrat plin valid</td>
+            <td>x=40, y=40, size=40, color=4</td>
+            <td>0≤x≤279, 0≤y≤159</td>
+            <td>Zonă umplută size×size</td>
+            <td>Clipping la margini</td>
+          </tr>
+          <tr>
+            <td>Pătrat contur valid</td>
+            <td>x=60, y=30, size=50, color=14</td>
+            <td>0≤x≤269, 0≤y≤149</td>
+            <td>Doar muchiile trasate</td>
+            <td>Clipping la margini</td>
+          </tr>
+          <tr>
+            <td>Culoare invalidă</td>
+            <td>color=200</td>
+            <td>n/a</td>
+            <td>Re‑prompt/mesaj eroare</td>
+            <td>Valorile valabile: 0–15</td>
+          </tr>
+          <tr>
+            <td>Coordonate out‑of‑range</td>
+            <td>x=400, y=300</td>
+            <td>n/a</td>
+            <td>Re‑prompt/ajustare/clipping</td>
+            <td>Ecran: 320×200</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="implementation">
+      <h2>6. Detalii de implementare</h2>
+      <ul>
+        <li><strong>Mode 13h</strong>: 320×200, 256 culori; segment video ES=A000h.</li>
+        <li><strong>Pixel</strong>: offset = y × 320 + x; scriere octet culoare.</li>
+        <li><strong>Interfețe</strong>: INT 10h (video), INT 21h (I/O), INT 16h (tastatură BIOS).</li>
+        <li><strong>Module</strong>: vezi comentariile de antet introduse în fișierele ASM.</li>
+      </ul>
+    </section>
+
+    <section id="build-run">
+      <h2>7. Build & Run</h2>
+      <p>Comenzi utile:</p>
+      <h3>MASM</h3>
+      <pre><code>masm application\\MAIN.ASM;
+masm application\\MENU.ASM;
+masm application\\DRAWM.ASM;
+masm application\\DRAWL.ASM;
+masm application\\DRAWS.ASM;
+masm application\\INP.ASM;
+masm application\\DATA.ASM;
+masm application\\IO.ASM;
+link MAIN MENU DRAWM DRAWL DRAWS INP DATA IO;
+</code></pre>
+      <h3>TASM</h3>
+      <pre><code>tasm /m2 application\\MAIN.ASM
+tasm /m2 application\\MENU.ASM
+tasm /m2 application\\DRAWM.ASM
+tasm /m2 application\\DRAWL.ASM
+tasm /m2 application\\DRAWS.ASM
+tasm /m2 application\\INP.ASM
+tasm /m2 application\\DATA.ASM
+tasm /m2 application\\IO.ASM
+tlink /t MAIN MENU DRAWM DRAWL DRAWS INP DATA IO
+</code></pre>
+      <p>Rulare: utilizați DOSBox‑X și lansați executabilul rezultat.</p>
+      <h3>NASM (opțional)</h3>
+      <p>NASM poate necesita directive specifice diferite. Variante posibile:</p>
+      <h4>Obiect OMF + link</h4>
+      <pre><code>nasm -f obj -o build\\MAIN.OBJ application\\MAIN.ASM
+nasm -f obj -o build\\MENU.OBJ application\\MENU.ASM
+...
+tlink /t build\\MAIN.OBJ build\\MENU.OBJ build\\DRAWM.OBJ build\\DRAWL.OBJ build\\DRAWS.OBJ build\\INP.OBJ build\\DATA.OBJ build\\IO.OBJ
+</code></pre>
+      <h4>Flat binary</h4>
+      <pre><code>nasm -f bin -o build\\program.com application\\MAIN.ASM</code></pre>
+    </section>
+
+    <section id="gallery">
+      <h2>8. Galerie (capturi)</h2>
+      <div class="gallery">
+        <figure>
+          <img src="../assets/images/captures/menu-main.png" alt="Meniu principal" />
+          <figcaption>Meniu principal</figcaption>
+        </figure>
+        <figure>
+          <img src="../assets/images/captures/draw-submenu.png" alt="Submeniu desen" />
+          <figcaption>Submeniu desen</figcaption>
+        </figure>
+        <figure>
+          <img src="../assets/images/captures/line-params.png" alt="Parametri linie" />
+          <figcaption>Parametri linie</figcaption>
+        </figure>
+        <figure>
+          <img src="../assets/images/captures/screenshot-2025-11-03-213835.png" alt="Înainte de desenare" />
+          <figcaption>Înainte de desenare (linie)</figcaption>
+        </figure>
+        <figure>
+          <img src="../assets/images/captures/screenshot-2025-11-03-213905.png" alt="După desenare" />
+          <figcaption>După desenare (linie/simbolic)</figcaption>
+        </figure>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2025 DOSBox‑X ASM 2D Draw App</p>
+  </footer>
+  <div class="crt-overlay" aria-hidden="true"></div>
+  <script>
+  (function(){
+    var AMBER='amber', GREEN='green';
+    var key='docs-theme';
+    var saved=localStorage.getItem(key);
+    var root=document.documentElement;
+    if(saved===AMBER||saved===GREEN){root.setAttribute('data-theme',saved);}
+    var btn=document.getElementById('themeToggle');
+    if(btn){
+      btn.addEventListener('click',function(){
+        var next=(root.getAttribute('data-theme')===GREEN)?AMBER:GREEN;
+        root.setAttribute('data-theme',next);
+        try{localStorage.setItem(key,next);}catch(e){}
+      });
+    }
+  })();
+  </script>
+</body>
+</html>
+
+

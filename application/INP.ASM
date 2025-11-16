@@ -12,6 +12,21 @@
 ; | |_| | ' \| \ V / -_) '_(_-< |  _/ _` |  _/ -_) _` |   | || '_/ _` | ' \(_-< | \ V / _` | ' \| / _` | / _` | | ' \  | _ \ '_/ _` (_-</ _ \ V /
 ;  \___/|_||_|_|\_/\___|_| /__/_|\__\__,_|\__\___\__,_|   |_||_| \__,_|_||_/__/_|_|\_/\__,_|_||_|_\__,_| \__,_|_|_||_| |___/_| \__,_/__/\___/\_/                                                                                                                                                                                                                                                                                                                                            
 ; INP.ASM                                                                                                                                                                                                                                                                                                                                           ; __zrppbaube_ugaiukcow_2025
+; =======================================================================================
+; FILE: INP.ASM
+; MODULE: Numeric Input Handling and Validation
+; 
+; PURPOSE:
+;   - Prompt for numeric inputs used by line/square drawing
+;   - Convert buffered ASCII input into AX (simple decimal parsing)
+; 
+; SERVICES:
+;   - read_number: DOS buffered input (AH=0Ah), parses to AX
+;   - new_line: print CRLF
+; 
+; NOTES:
+;   - Minimal validation; assumes digits and reasonable ranges
+; =======================================================================================
 
 .CODE
 
@@ -92,7 +107,7 @@ get_color:
     RET                                                                                                                                                                                                                                                                                                                                           
 
 read_number:
-    MOV dx, offset input_buffer
+    MOV dx, offset input_buffer   ; DOS buffered input structure
     MOV ah, 0Ah
     INT 21h
     CALL new_line
@@ -105,7 +120,7 @@ readnum_loop:
     JE readnum_done
     SUB cl, '0'
     MOV bx, ax
-    SHL ax, 1                                                                                                                                                                                                                                                                                                                                           
+    SHL ax, 1
     SHL ax, 1
     SHL ax, 1
     ADD ax, bx
@@ -121,5 +136,5 @@ readnum_done:
 new_line:
     MOV dx, offset newl
     MOV ah, 09h
-    INT 21h                                                                                                                                                                                                                                                                                                                                           
+    INT 21h
     RET

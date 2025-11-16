@@ -12,6 +12,19 @@
 ; | |_| | ' \| \ V / -_) '_(_-< |  _/ _` |  _/ -_) _` |   | || '_/ _` | ' \(_-< | \ V / _` | ' \| / _` | / _` | | ' \  | _ \ '_/ _` (_-</ _ \ V /
 ;  \___/|_||_|_|\_/\___|_| /__/_|\__\__,_|\__\___\__,_|   |_||_| \__,_|_||_/__/_|_|\_/\__,_|_||_|_\__,_| \__,_|_|_||_| |___/_| \__,_/__/\___/\_/ 
 ; DRAWS.ASM
+; =======================================================================================
+; FILE: DRAWS.ASM
+; MODULE: Square Drawing Menu + Algorithms
+; 
+; PURPOSE:
+;   - Present square drawing options (filled or outline)
+;   - Collect parameters and draw using line primitives (from DRAWL.ASM)
+; 
+; ENTRY POINTS:
+;   - draw_square_menu
+;   - draw_square (filled)
+;   - draw_square_outline
+; =======================================================================================
 
 .CODE                                                                                                                                                                                                                                                                                                                                           ; __zrppbaube_ugaiukcow_2025
 
@@ -20,7 +33,7 @@ draw_square_menu:
     LEA DX, prompt_square
     CALL PrintString
     
-    MOV ah, 01h
+    MOV ah, 01h                    ; read user selection
     INT 21h
 
     CMP AL, '1'
@@ -38,7 +51,7 @@ prepare_filled_square:
     CALL sqr_user_input
     CALL _clear_screen
     CALL set_video_mode
-    CALL draw_square                                                                                                                                                                                                                                                                                                                        
+    CALL draw_square               ; filled square
 
 prepare_outline_square:
     CALL sqr_user_input
@@ -56,21 +69,22 @@ _program_end_sqr:
     RET
 
 draw_square:
+    ; Draw a filled square at (square_x, square_y) with side = square_size
     PUSH ax bx cx dx si di
     
     MOV ax, [square_x]
     MOV bx, [square_y]
     MOV cx, [square_size]
     
-    MOV si, bx    
+    MOV si, bx
     MOV di, bx                                                                                                                                                                                                                                                                                                                              
     ADD di, cx
     
 draw_square_loop:
-    MOV [line_x], ax       
-    MOV [line_y], si       
-    MOV [line_param], cx   
-    MOV [line_type], '1'  
+    MOV [line_x], ax
+    MOV [line_y], si
+    MOV [line_param], cx
+    MOV [line_type], '1'   ; horizontal line
     MOV dl, [square_color]
     MOV [line_color], dl
     
@@ -85,6 +99,7 @@ draw_square_loop:
     JMP show_draw_menu
     
 draw_square_outline:
+    ; Draw only the 4 borders (top, bottom, left, right)
     PUSH ax bx cx dx
     
     MOV ax, [square_x]
@@ -97,7 +112,7 @@ draw_square_outline:
     MOV [line_param], cx
     MOV [line_type], '1'
     MOV [line_color], dl
-    CALL draw_line
+    CALL draw_line                ; top
     
     MOV [line_x], ax
     MOV dx, bx
@@ -106,13 +121,13 @@ draw_square_outline:
     MOV [line_y], dx
     MOV [line_param], cx                                                                                                                                                                                                                                                                                                                              
     MOV [line_type], '1'
-    CALL draw_line
+    CALL draw_line                ; bottom
     
     MOV [line_x], ax
     MOV [line_y], bx
     MOV [line_param], cx
     MOV [line_type], '2'
-    CALL draw_line
+    CALL draw_line                ; left
 
     MOV dx, ax
     ADD dx, cx
@@ -121,7 +136,7 @@ draw_square_outline:
     MOV [line_y], bx
     MOV [line_param], cx
     MOV [line_type], '2'
-    CALL draw_line
+    CALL draw_line                ; right
 
     POP dx cx bx ax
     CALL wait_for_key

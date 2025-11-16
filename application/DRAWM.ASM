@@ -12,6 +12,26 @@
 ; | |_| | ' \| \ V / -_) '_(_-< |  _/ _` |  _/ -_) _` |   | || '_/ _` | ' \(_-< | \ V / _` | ' \| / _` | / _` | | ' \  | _ \ '_/ _` (_-</ _ \ V /
 ;  \___/|_||_|_|\_/\___|_| /__/_|\__\__,_|\__\___\__,_|   |_||_| \__,_|_||_/__/_|_|\_/\__,_|_||_|_\__,_| \__,_|_|_||_| |___/_| \__,_/__/\___/\_/ 
 ; DRAWM.ASM
+; =======================================================================================
+; FILE: DRAWM.ASM
+; MODULE: Drawing Submenu Controller
+; 
+; PURPOSE:
+;   - Present drawing-related options (Line, Square, Back, Exit)
+;   - Dispatch to corresponding parameter menus and drawing routines
+; 
+; ENTRY POINTS:
+;   - ShowDrawMenu
+; 
+; UI FLOW:
+;   ShowDrawMenu
+;     ├─ _clear_screen + PrintString(prompt_draw)
+;     └─ Read key:
+;           '1' → draw_line_menu (DRAWL.ASM)
+;           '2' → draw_square_menu (DRAWS.ASM)
+;           '3' → back to ShowMenu (MENU.ASM)
+;           '4' → _exit_program
+; =======================================================================================
                                                                                                                                                                                                                                                                                                                                            ; __zrppbaube_ugaiukcow_2025
 .CODE
 
@@ -23,8 +43,8 @@ show_draw_menu:
     LEA DX, prompt_draw
     CALL PrintString
 
-    mov ah, 01h                                                                                                                                                                                                                                                                                                                                           
-    int 21h
+    mov ah, 01h
+    int 21h                      ; AL = input key
 
     CMP AL, '1'
     JE draw_line_menu
@@ -41,6 +61,6 @@ show_draw_menu:
     jmp show_draw_menu
 
 call_square_menu:
-    call draw_square_menu
+    call draw_square_menu        ; enter square submenu (DRAWS.ASM)
 
 ShowDrawMenu ENDP
