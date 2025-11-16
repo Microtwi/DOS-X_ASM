@@ -50,15 +50,15 @@ draw_menu:
     INT 21h                      ; AL = ASCII
 
     CMP AL, '1'
-    JE show_draw_menu
+    JE show_draw_menu            ; draw menu
 
-    CMP AL, '2'
+    CMP AL, '2'                  ; credits
     JE _draw_credit
 
-    CMP AL, '3'
+    CMP AL, '3'                  ; exit
     JE _program_end
 
-    JMP draw_menu
+    JMP draw_menu                ; loop back to menu
 
 _draw_credit:
     CALL _clear_screen

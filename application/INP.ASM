@@ -39,25 +39,26 @@ get_line_parameters:
     INT 21h
     MOV line_type, al
 
-    CMP [line_type], '1'
+    CMP [line_type], '1'          ; draw line
     JE prompt_user_h
-    CMP [line_type], '2'
+    CMP [line_type], '2'          ; draw square
     JE prompt_user_v
-    CMP [line_type], '3'
+    CMP [line_type], '3'          ; draw_menu back
     JE show_draw_menu_inp
-    CMP [line_type], '4'
+    CMP [line_type], '4'          ; exit
     JE _program_end_inp
     JMP get_line_parameters
 
-_program_end_inp:
+_program_end_inp:                 ; exit
     CALL _clear_screen
     CALL _exit_program
     RET
     
-show_draw_menu_inp:
-    CALL show_draw_menu
+show_draw_menu_inp:               ; draw_menu back
+    CALL show_draw_menu           
     RET
 
+; prompt for x and y coordinates
 prompt_for_x_y:
     CALL _clear_screen
     
@@ -76,6 +77,7 @@ prompt_for_x_y:
     CALL _clear_screen   
     RET
 
+; prompt for width and height
 prompt_user_h:
     CALL prompt_for_x_y
 
@@ -86,6 +88,7 @@ prompt_user_h:
     MOV [line_param], ax
     JMP get_color
     
+; prompt for width and height
 prompt_user_v:
     CALL prompt_for_x_y
     
@@ -96,6 +99,7 @@ prompt_user_v:
     MOV [line_param], ax
     JMP get_color
 
+; get line color
 get_color:
     CALL _clear_screen
     MOV dx, offset prompt_color
@@ -106,6 +110,7 @@ get_color:
     CALL _clear_screen
     RET                                                                                                                                                                                                                                                                                                                                           
 
+; read number from user
 read_number:
     MOV dx, offset input_buffer   ; DOS buffered input structure
     MOV ah, 0Ah
@@ -133,6 +138,7 @@ readnum_loop:
 readnum_done:
     RET
 
+; draw new line
 new_line:
     MOV dx, offset newl
     MOV ah, 09h

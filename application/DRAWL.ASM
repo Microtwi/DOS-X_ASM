@@ -84,6 +84,7 @@ draw_line:
     POP di si dx cx bx ax
     RET
 
+; draw horizontal line
 draw_h_loop:
     MOV si, cx
     MOV di, [line_param]
@@ -96,6 +97,7 @@ draw_h_pixel:
     JL draw_h_pixel
     JMP done_line
 
+; draw vertical line
 draw_v_loop:
     MOV si, dx
     MOV di, [line_param]
@@ -105,9 +107,10 @@ draw_v_pixel:
     CALL draw_pixel
     INC dx
     CMP dx, di
-    JL draw_v_pixel                                                                                                                                                                                                                                                                                                                                           
+    JL draw_v_pixel                                                                                                                                                                                                                                                                                                                                      
     JMP done_line
 
+; done line
 done_line:
     POP di si dx cx bx ax
     RET

@@ -36,19 +36,19 @@ draw_square_menu:
     MOV ah, 01h                    ; read user selection
     INT 21h
 
-    CMP AL, '1'
+    CMP AL, '1'                  ; draw filled square
     JE prepare_filled_square
-    CMP AL, '2'
+    CMP AL, '2'                  ; draw outline square
     JE prepare_outline_square
-    CMP AL, '3'
+    CMP AL, '3'                  ; draw_menu back
     JE _show_draw_menu_sqr                                                                                                                                                                                                                                                                                                                              
-    CMP AL, '4'
+    CMP AL, '4'                  ;  exit
     JE _program_end_sqr
 
     JMP draw_square_menu
 
 prepare_filled_square:
-    CALL sqr_user_input
+    CALL sqr_user_input            
     CALL _clear_screen
     CALL set_video_mode
     CALL draw_square               ; filled square

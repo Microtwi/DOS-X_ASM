@@ -119,8 +119,3 @@ tlink /t MAIN MENU DRAWM DRAWL DRAWS INP DATA IO
 ```
 
 ---
-
-## 📄 Legal and contributing
-
-- License: see `LICENSE` (MIT)
-- Contributing guidelines: see `CONTRIBUTING.md`

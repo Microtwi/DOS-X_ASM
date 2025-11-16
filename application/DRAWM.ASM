@@ -46,16 +46,16 @@ show_draw_menu:
     mov ah, 01h
     int 21h                      ; AL = input key
 
-    CMP AL, '1'
+    CMP AL, '1'                  ; draw line
     JE draw_line_menu
 
-    CMP AL, '2'
+    CMP AL, '2'                  ; draw square
     JE call_square_menu
 
-    CMP AL, '3'
+    CMP AL, '3'                  ; draw_menu - back
     JE draw_menu
 
-    CMP AL, '4'
+    CMP AL, '4'                  ; exit
     JE _program_end                                                                                                                                                                                                                                                                                                                                           
 
     jmp show_draw_menu
