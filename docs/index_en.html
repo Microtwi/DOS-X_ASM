@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>DOSBox‑X ASM 2D Draw App – Documentation</title>
+  <title>DOSBox-X ASM 2D Draw App - Documentation</title>
   <link rel="stylesheet" href="styles.css" />
   <script src="core.js"></script>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -26,8 +26,8 @@
       <a href="index_ro.html">RO Romanian</a>
     </div>
     <div class="header-body">
-      <h1>DOSBox‑X ASM 2D Draw App</h1>
-      <p>Intel 8086 (16‑bit) • DOSBox‑X • TASM</p>
+      <h1>DOSBox-X ASM 2D Draw App</h1>
+      <p>Intel 8086 (16-bit) • DOSBox-X • TASM</p>
     </div>
   </header>
 
@@ -43,7 +43,7 @@
       <ul>
         <li><strong>Microprocessor</strong>: Intel 8086 (real mode)</li>
         <li><strong>Peripherals</strong>: keyboard (INT 21h/01h, INT 16h), display (INT 10h), memory (A000h)</li>
-        <li><strong>Execution Environment</strong>: DOSBox‑X</li>
+        <li><strong>Execution Environment</strong>: DOSBox-X</li>
       </ul>
     </section>
 
@@ -51,14 +51,14 @@
       <h2>2. Peripherals and Services</h2>
       <ul>
         <li><strong>Keyboard</strong>: read character (DOS INT 21h/01h), wait for key (BIOS INT 16h/00h)</li>
-        <li><strong>Display</strong>: text mode 80×25 and graphics mode 13h 320×200×256 (BIOS INT 10h)</li>
+        <li><strong>Display</strong>: text mode 80x25 and graphics mode 13h 320x200x256 (BIOS INT 10h)</li>
         <li><strong>Memory</strong>: data segment DS, video memory ES=A000h for pixels</li>
       </ul>
       <p><strong>Interrupts used</strong>:</p>
       <ul>
-        <li>INT 10h – AH=00h (set video mode), AH=02h (cursor position), AH=06h (scroll/clear)</li>
-        <li>INT 21h – AH=09h (print string), AH=01h (read char), AH=4Ch (exit)</li>
-        <li>INT 16h – AH=00h (wait for key)</li>
+        <li>INT 10h - AH=00h (set video mode), AH=02h (cursor position), AH=06h (scroll/clear)</li>
+        <li>INT 21h - AH=09h (print string), AH=01h (read char), AH=4Ch (exit)</li>
+        <li>INT 16h - AH=00h (wait for key)</li>
       </ul>
     </section>
 
@@ -128,7 +128,7 @@
             <td>Valid filled square</td>
             <td>x=40, y=40, size=40, color=4</td>
             <td>0≤x≤279, 0≤y≤159</td>
-            <td>Area filled size×size</td>
+            <td>Area filled sizexsize</td>
             <td>Edge clipping</td>
           </tr>
           <tr>
@@ -143,14 +143,14 @@
             <td>color=200</td>
             <td>n/a</td>
             <td>Re-prompt/error message</td>
-            <td>Valid values: 0–15</td>
+            <td>Valid values: 0-15</td>
           </tr>
           <tr>
             <td>Coordinates out-of-range</td>
             <td>x=400, y=300</td>
             <td>n/a</td>
             <td>Re-prompt/adjustment/clipping</td>
-            <td>Screen: 320×200</td>
+            <td>Screen: 320x200</td>
           </tr>
         </tbody>
       </table>
@@ -159,8 +159,8 @@
     <section id="implementation">
       <h2>6. Implementation Details</h2>
       <ul>
-        <li><strong>Mode 13h</strong>: 320×200, 256 colors; video segment ES=A000h.</li>
-        <li><strong>Pixel</strong>: offset = y × 320 + x; write color byte.</li>
+        <li><strong>Mode 13h</strong>: 320x200, 256 colors; video segment ES=A000h.</li>
+        <li><strong>Pixel</strong>: offset = y x 320 + x; write color byte.</li>
         <li><strong>Interfaces</strong>: INT 10h (video), INT 21h (I/O), INT 16h (BIOS keyboard).</li>
         <li><strong>Modules</strong>: see header comments in ASM files.</li>
       </ul>
@@ -179,7 +179,7 @@ tasm /m2 application\\DATA.ASM
 tasm /m2 application\\IO.ASM
 tlink /t MAIN MENU DRAWM DRAWL DRAWS INP DATA IO
 </code></pre>
-      <p>Run: use DOSBox‑X and launch the resulting executable.</p>
+      <p>Run: use DOSBox-X and launch the resulting executable.</p>
     </section>
 
     <section id="gallery">
@@ -244,7 +244,7 @@ tlink /t MAIN MENU DRAWM DRAWL DRAWS INP DATA IO
   </main>
 
   <footer>
-    <p>© 2025 DOSBox‑X ASM 2D Draw App</p>
+    <p>© 2025 DOSBox-X ASM 2D Draw App</p>
   </footer>
   <div class="crt-overlay" aria-hidden="true"></div>
 </body>

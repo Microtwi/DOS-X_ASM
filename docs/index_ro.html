@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>DOSBox‑X ASM 2D Draw App – Documentație</title>
+  <title>DOSBox-X ASM 2D Draw App - Documentație</title>
   <link rel="stylesheet" href="styles.css" />
   <script src="core.js"></script>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -26,8 +26,8 @@
       <a href="index_en.html">EN English</a>
     </div>
     <div class="header-body">
-      <h1>DOSBox‑X ASM 2D Draw App</h1>
-      <p>Intel 8086 (16‑bit) • DOSBox‑X • TASM</p>
+      <h1>DOSBox-X ASM 2D Draw App</h1>
+      <p>Intel 8086 (16-bit) • DOSBox-X • TASM</p>
     </div>
   </header>
 
@@ -44,7 +44,7 @@
       <ul>
         <li><strong>Microprocesor</strong>: Intel 8086 (real mode)</li>
         <li><strong>Periferice</strong>: tastatură (INT 21h/01h, INT 16h), display (INT 10h), memorie (A000h)</li>
-        <li><strong>Mediu execuție</strong>: DOSBox‑X</li>
+        <li><strong>Mediu execuție</strong>: DOSBox-X</li>
       </ul>
     </section>
 
@@ -52,14 +52,14 @@
       <h2>2. Periferice și servicii</h2>
       <ul>
         <li><strong>Tastatură</strong>: citire caracter (DOS INT 21h/01h), așteptare tastă (BIOS INT 16h/00h)</li>
-        <li><strong>Display</strong>: mod text 80×25 și mod grafic 13h 320×200×256 (BIOS INT 10h)</li>
+        <li><strong>Display</strong>: mod text 80x25 și mod grafic 13h 320x200x256 (BIOS INT 10h)</li>
         <li><strong>Memorie</strong>: segment date DS, memorie video ES=A000h pentru pixeli</li>
       </ul>
       <p><strong>Întreruperi utilizate</strong>:</p>
       <ul>
-        <li>INT 10h – AH=00h (set video mode), AH=02h (cursor), AH=06h (scroll/clear)</li>
-        <li>INT 21h – AH=09h (print string), AH=01h (read char), AH=4Ch (exit)</li>
-        <li>INT 16h – AH=00h (wait for key)</li>
+        <li>INT 10h - AH=00h (set video mode), AH=02h (cursor), AH=06h (scroll/clear)</li>
+        <li>INT 21h - AH=09h (print string), AH=01h (read char), AH=4Ch (exit)</li>
+        <li>INT 16h - AH=00h (wait for key)</li>
       </ul>
     </section>
 
@@ -96,7 +96,7 @@
         <li><strong>Linie verticală</strong>: x=100, y=20, înălțime=80, culoare=10 → se trasează pe coloana 100.</li>
         <li><strong>Pătrat plin</strong>: (x,y)=(40,40), mărime=40, culoare=4 → zonă umplută corect.</li>
         <li><strong>Pătrat contur</strong>: (x,y)=(60,30), mărime=50, culoare=14 → doar marginile trasate.</li>
-        <li><strong>Input invalid</strong>: caractere non-digit sau valori în afara intervalului → re‑prompt sau
+        <li><strong>Input invalid</strong>: caractere non-digit sau valori în afara intervalului → re-prompt sau
           ignorare.</li>
         <li><strong>Tranziții mod</strong>: după desenare, apăsare tastă → revine la modul text, ecran curat.</li>
       </ol>
@@ -130,7 +130,7 @@
             <td>Pătrat plin valid</td>
             <td>x=40, y=40, size=40, color=4</td>
             <td>0≤x≤279, 0≤y≤159</td>
-            <td>Zonă umplută size×size</td>
+            <td>Zonă umplută sizexsize</td>
             <td>Clipping la margini</td>
           </tr>
           <tr>
@@ -144,15 +144,15 @@
             <td>Culoare invalidă</td>
             <td>color=200</td>
             <td>n/a</td>
-            <td>Re‑prompt/mesaj eroare</td>
-            <td>Valorile valabile: 0–15</td>
+            <td>Re-prompt/mesaj eroare</td>
+            <td>Valorile valabile: 0-15</td>
           </tr>
           <tr>
-            <td>Coordonate out‑of‑range</td>
+            <td>Coordonate out-of-range</td>
             <td>x=400, y=300</td>
             <td>n/a</td>
-            <td>Re‑prompt/ajustare/clipping</td>
-            <td>Ecran: 320×200</td>
+            <td>Re-prompt/ajustare/clipping</td>
+            <td>Ecran: 320x200</td>
           </tr>
         </tbody>
       </table>
@@ -161,8 +161,8 @@
     <section id="implementation">
       <h2>6. Detalii de implementare</h2>
       <ul>
-        <li><strong>Mode 13h</strong>: 320×200, 256 culori; segment video ES=A000h.</li>
-        <li><strong>Pixel</strong>: offset = y × 320 + x; scriere octet culoare.</li>
+        <li><strong>Mode 13h</strong>: 320x200, 256 culori; segment video ES=A000h.</li>
+        <li><strong>Pixel</strong>: offset = y x 320 + x; scriere octet culoare.</li>
         <li><strong>Interfețe</strong>: INT 10h (video), INT 21h (I/O), INT 16h (tastatură BIOS).</li>
         <li><strong>Module</strong>: vezi comentariile de antet în fișierele ASM.</li>
       </ul>
@@ -181,7 +181,7 @@ tasm /m2 application\\DATA.ASM
 tasm /m2 application\\IO.ASM
 tlink /t MAIN MENU DRAWM DRAWL DRAWS INP DATA IO
 </code></pre>
-      <p>Rulare: utilizați DOSBox‑X și lansați executabilul rezultat.</p>
+      <p>Rulare: utilizați DOSBox-X și lansați executabilul rezultat.</p>
     </section>
 
     <section id="gallery">
@@ -246,7 +246,7 @@ tlink /t MAIN MENU DRAWM DRAWL DRAWS INP DATA IO
   </main>
 
   <footer>
-    <p>© 2025 DOSBox‑X ASM 2D Draw App</p>
+    <p>© 2025 DOSBox-X ASM 2D Draw App</p>
   </footer>
 
   <div class="crt-overlay" aria-hidden="true"></div>
