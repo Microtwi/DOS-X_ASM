@@ -1,22 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>DOSBox‑X ASM 2D Draw App – Documentation</title>
   <link rel="stylesheet" href="styles.css" />
+  <script src="core.js"></script>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
 </head>
+
+<script>
+  setTimeout(initializedContextMenu, 100);
+</script>
+
 <body>
+  <div class="fullscreenImageBG"></div>
+
   <header class="terminal-header">
     <div class="window-controls" aria-hidden="true">
       <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
     </div>
+    <div class="lang">
+      <a href="index_ro.html">RO Romanian</a>
+    </div>
     <div class="header-body">
       <h1>DOSBox‑X ASM 2D Draw App</h1>
-      <p>Intel 8086 (16‑bit) • DOSBox‑X • MASM/TASM</p>
+      <p>Intel 8086 (16‑bit) • DOSBox‑X • TASM</p>
     </div>
+  </header>
+
   <main>
     <section id="overview">
       <h2>1. General Description</h2>
@@ -55,7 +69,9 @@
         supported by IO (DOS/BIOS services), INP (numeric input), DATA (messages/constants).
       </p>
       <figure class="figure-bordered">
-        <img src="https://raw.githubusercontent.com/DarkSoulEngineer/DOS-X_ASM/main/assets/images/diagrams/block_diagram_v2.png" alt="System block diagram" />
+        <img
+          src="https://raw.githubusercontent.com/DarkSoulEngineer/DOS-X_ASM/main/assets/images/diagrams/block_diagram_v2.png"
+          alt="System block diagram" />
         <figcaption>Figure 1: System block diagram</figcaption>
       </figure>
     </section>
@@ -170,39 +186,56 @@ tlink /t MAIN MENU DRAWM DRAWL DRAWS INP DATA IO
       <h2>8. Gallery (screenshots)</h2>
       <div class="gallery">
         <figure>
-          <img src="https://raw.githubusercontent.com/DarkSoulEngineer/DOS-X_ASM/main/assets/images/captures/main_menu.png" alt="Main menu" />
+          <img
+            src="https://raw.githubusercontent.com/DarkSoulEngineer/DOS-X_ASM/main/assets/images/captures/main_menu.png"
+            alt="Main menu" />
           <figcaption>Main menu</figcaption>
         </figure>
         <figure>
-          <img src="https://raw.githubusercontent.com/DarkSoulEngineer/DOS-X_ASM/main/assets/images/captures/about.png" alt="About team" />
+          <img src="https://raw.githubusercontent.com/DarkSoulEngineer/DOS-X_ASM/main/assets/images/captures/about.png"
+            alt="About team" />
           <figcaption>About team</figcaption>
         </figure>
         <figure>
-          <img src="https://raw.githubusercontent.com/DarkSoulEngineer/DOS-X_ASM/main/assets/images/captures/draw_menu.png" alt="Draw submenu" />
+          <img
+            src="https://raw.githubusercontent.com/DarkSoulEngineer/DOS-X_ASM/main/assets/images/captures/draw_menu.png"
+            alt="Draw submenu" />
           <figcaption>Draw submenu</figcaption>
         </figure>
         <figure>
-          <img src="https://raw.githubusercontent.com/DarkSoulEngineer/DOS-X_ASM/main/assets/images/captures/line_menu.png" alt="Line parameters: Choose line" />
+          <img
+            src="https://raw.githubusercontent.com/DarkSoulEngineer/DOS-X_ASM/main/assets/images/captures/line_menu.png"
+            alt="Line parameters: Choose line" />
           <figcaption>Choose line</figcaption>
         </figure>
         <figure>
-          <img src="https://raw.githubusercontent.com/DarkSoulEngineer/DOS-X_ASM/main/assets/images/captures/prompt_x.png" alt="Line parameters: X" />
+          <img
+            src="https://raw.githubusercontent.com/DarkSoulEngineer/DOS-X_ASM/main/assets/images/captures/prompt_x.png"
+            alt="Line parameters: X" />
           <figcaption>Line parameters: X</figcaption>
         </figure>
         <figure>
-          <img src="https://raw.githubusercontent.com/DarkSoulEngineer/DOS-X_ASM/main/assets/images/captures/prompt_y.png" alt="Line parameters: Y" />
+          <img
+            src="https://raw.githubusercontent.com/DarkSoulEngineer/DOS-X_ASM/main/assets/images/captures/prompt_y.png"
+            alt="Line parameters: Y" />
           <figcaption>Line parameters: Y</figcaption>
         </figure>
         <figure>
-          <img src="https://raw.githubusercontent.com/DarkSoulEngineer/DOS-X_ASM/main/assets/images/captures/prompt_color.png" alt="Line parameters: Color" />
+          <img
+            src="https://raw.githubusercontent.com/DarkSoulEngineer/DOS-X_ASM/main/assets/images/captures/prompt_color.png"
+            alt="Line parameters: Color" />
           <figcaption>Line parameters: Color</figcaption>
         </figure>
         <figure>
-          <img src="https://raw.githubusercontent.com/DarkSoulEngineer/DOS-X_ASM/main/assets/images/captures/filled_square.png" alt="Filled square" />
+          <img
+            src="https://raw.githubusercontent.com/DarkSoulEngineer/DOS-X_ASM/main/assets/images/captures/filled_square.png"
+            alt="Filled square" />
           <figcaption>Filled square</figcaption>
         </figure>
         <figure>
-          <img src="https://raw.githubusercontent.com/DarkSoulEngineer/DOS-X_ASM/main/assets/images/captures/hallowed_square.png" alt="Hollow square" />
+          <img
+            src="https://raw.githubusercontent.com/DarkSoulEngineer/DOS-X_ASM/main/assets/images/captures/hallowed_square.png"
+            alt="Hollow square" />
           <figcaption>Hollow square</figcaption>
         </figure>
       </div>
@@ -213,26 +246,7 @@ tlink /t MAIN MENU DRAWM DRAWL DRAWS INP DATA IO
   <footer>
     <p>© 2025 DOSBox‑X ASM 2D Draw App</p>
   </footer>
-    <nav>
-      <a href="index_ro.html">RO Romanian</a>
-    </nav>
   <div class="crt-overlay" aria-hidden="true"></div>
-  <script>
-  (function(){
-    var AMBER='amber', GREEN='green';
-    var key='docs-theme';
-    var saved=localStorage.getItem(key);
-    var root=document.documentElement;
-    if(saved===AMBER||saved===GREEN){root.setAttribute('data-theme',saved);}
-    var btn=document.getElementById('themeToggle');
-    if(btn){
-      btn.addEventListener('click',function(){
-        var next=(root.getAttribute('data-theme')===GREEN)?AMBER:GREEN;
-        root.setAttribute('data-theme',next);
-        try{localStorage.setItem(key,next);}catch(e){}
-      });
-    }
-  })();
-  </script>
 </body>
+
 </html>

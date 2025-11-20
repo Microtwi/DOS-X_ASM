@@ -1,17 +1,29 @@
 <!DOCTYPE html>
 <html lang="ro">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>DOSBox‑X ASM 2D Draw App – Documentație</title>
   <link rel="stylesheet" href="styles.css" />
+  <script src="core.js"></script>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
 </head>
+
+<script>
+  setTimeout(initializedContextMenu, 100);
+</script>
+
 <body>
+  <div class="fullscreenImageBG"></div>
+
   <header class="terminal-header">
     <div class="window-controls" aria-hidden="true">
       <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+    </div>
+    <div class="lang">
+      <a href="index_en.html">EN English</a>
     </div>
     <div class="header-body">
       <h1>DOSBox‑X ASM 2D Draw App</h1>
@@ -20,6 +32,7 @@
   </header>
 
   <main>
+
     <section id="overview">
       <h2>1. Descriere generală</h2>
       <p>
@@ -57,7 +70,9 @@
         susținute de IO (servicii DOS/BIOS), INP (input numeric), DATA (mesaje/constante).
       </p>
       <figure class="figure-bordered">
-        <img src="https://raw.githubusercontent.com/DarkSoulEngineer/DOS-X_ASM/main/assets/images/diagrams/block_diagram_v2.png" alt="Schemă bloc a sistemului" />
+        <img
+          src="https://raw.githubusercontent.com/DarkSoulEngineer/DOS-X_ASM/main/assets/images/diagrams/block_diagram_v2.png"
+          alt="Schemă bloc a sistemului" />
         <figcaption>Figura 1: Schemă bloc a sistemului</figcaption>
       </figure>
     </section>
@@ -81,7 +96,8 @@
         <li><strong>Linie verticală</strong>: x=100, y=20, înălțime=80, culoare=10 → se trasează pe coloana 100.</li>
         <li><strong>Pătrat plin</strong>: (x,y)=(40,40), mărime=40, culoare=4 → zonă umplută corect.</li>
         <li><strong>Pătrat contur</strong>: (x,y)=(60,30), mărime=50, culoare=14 → doar marginile trasate.</li>
-        <li><strong>Input invalid</strong>: caractere non-digit sau valori în afara intervalului → re‑prompt sau ignorare.</li>
+        <li><strong>Input invalid</strong>: caractere non-digit sau valori în afara intervalului → re‑prompt sau
+          ignorare.</li>
         <li><strong>Tranziții mod</strong>: după desenare, apăsare tastă → revine la modul text, ecran curat.</li>
       </ol>
       <h3>Matrix de test (parametri vs rezultate așteptate)</h3>
@@ -172,39 +188,56 @@ tlink /t MAIN MENU DRAWM DRAWL DRAWS INP DATA IO
       <h2>8. Galerie (capturi)</h2>
       <div class="gallery">
         <figure>
-          <img src="https://raw.githubusercontent.com/DarkSoulEngineer/DOS-X_ASM/main/assets/images/captures/main_menu.png" alt="Meniu principal" />
+          <img
+            src="https://raw.githubusercontent.com/DarkSoulEngineer/DOS-X_ASM/main/assets/images/captures/main_menu.png"
+            alt="Meniu principal" />
           <figcaption>Meniu principal</figcaption>
         </figure>
         <figure>
-          <img src="https://raw.githubusercontent.com/DarkSoulEngineer/DOS-X_ASM/main/assets/images/captures/about.png" alt="Despre echipă" />
+          <img src="https://raw.githubusercontent.com/DarkSoulEngineer/DOS-X_ASM/main/assets/images/captures/about.png"
+            alt="Despre echipă" />
           <figcaption>Despre echipă</figcaption>
         </figure>
         <figure>
-          <img src="https://raw.githubusercontent.com/DarkSoulEngineer/DOS-X_ASM/main/assets/images/captures/draw_menu.png" alt="Submeniu desen" />
+          <img
+            src="https://raw.githubusercontent.com/DarkSoulEngineer/DOS-X_ASM/main/assets/images/captures/draw_menu.png"
+            alt="Submeniu desen" />
           <figcaption>Submeniu desen</figcaption>
         </figure>
         <figure>
-          <img src="https://raw.githubusercontent.com/DarkSoulEngineer/DOS-X_ASM/main/assets/images/captures/line_menu.png" alt="Alegere linie" />
+          <img
+            src="https://raw.githubusercontent.com/DarkSoulEngineer/DOS-X_ASM/main/assets/images/captures/line_menu.png"
+            alt="Alegere linie" />
           <figcaption>Alegere linie</figcaption>
         </figure>
         <figure>
-          <img src="https://raw.githubusercontent.com/DarkSoulEngineer/DOS-X_ASM/main/assets/images/captures/prompt_x.png" alt="Parametri linie: X" />
+          <img
+            src="https://raw.githubusercontent.com/DarkSoulEngineer/DOS-X_ASM/main/assets/images/captures/prompt_x.png"
+            alt="Parametri linie: X" />
           <figcaption>Parametri linie: X</figcaption>
         </figure>
         <figure>
-          <img src="https://raw.githubusercontent.com/DarkSoulEngineer/DOS-X_ASM/main/assets/images/captures/prompt_y.png" alt="Parametri linie: Y" />
+          <img
+            src="https://raw.githubusercontent.com/DarkSoulEngineer/DOS-X_ASM/main/assets/images/captures/prompt_y.png"
+            alt="Parametri linie: Y" />
           <figcaption>Parametri linie: Y</figcaption>
         </figure>
         <figure>
-          <img src="https://raw.githubusercontent.com/DarkSoulEngineer/DOS-X_ASM/main/assets/images/captures/prompt_color.png" alt="Parametri linie: Culoare" />
+          <img
+            src="https://raw.githubusercontent.com/DarkSoulEngineer/DOS-X_ASM/main/assets/images/captures/prompt_color.png"
+            alt="Parametri linie: Culoare" />
           <figcaption>Parametri linie: Culoare</figcaption>
         </figure>
         <figure>
-          <img src="https://raw.githubusercontent.com/DarkSoulEngineer/DOS-X_ASM/main/assets/images/captures/filled_square.png" alt="Pătrat plin" />
+          <img
+            src="https://raw.githubusercontent.com/DarkSoulEngineer/DOS-X_ASM/main/assets/images/captures/filled_square.png"
+            alt="Pătrat plin" />
           <figcaption>Pătrat plin</figcaption>
         </figure>
         <figure>
-          <img src="https://raw.githubusercontent.com/DarkSoulEngineer/DOS-X_ASM/main/assets/images/captures/hallowed_square.png" alt="Pătrat gol" />
+          <img
+            src="https://raw.githubusercontent.com/DarkSoulEngineer/DOS-X_ASM/main/assets/images/captures/hallowed_square.png"
+            alt="Pătrat gol" />
           <figcaption>Pătrat gol</figcaption>
         </figure>
       </div>
@@ -215,26 +248,8 @@ tlink /t MAIN MENU DRAWM DRAWL DRAWS INP DATA IO
   <footer>
     <p>© 2025 DOSBox‑X ASM 2D Draw App</p>
   </footer>
-    <nav>
-      <a href="index_en.html">EN English</a>
-    </nav>
+
   <div class="crt-overlay" aria-hidden="true"></div>
-  <script>
-  (function(){
-    var AMBER='amber', GREEN='green';
-    var key='docs-theme';
-    var saved=localStorage.getItem(key);
-    var root=document.documentElement;
-    if(saved===AMBER||saved===GREEN){root.setAttribute('data-theme',saved);}
-    var btn=document.getElementById('themeToggle');
-    if(btn){
-      btn.addEventListener('click',function(){
-        var next=(root.getAttribute('data-theme')===GREEN)?AMBER:GREEN;
-        root.setAttribute('data-theme',next);
-        try{localStorage.setItem(key,next);}catch(e){}
-      });
-    }
-  })();
-  </script>
 </body>
+
 </html>
